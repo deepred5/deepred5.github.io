@@ -147,6 +147,166 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-使用Web-Worker优化代码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/06/使用Web-Worker优化代码/">使用Web Worker优化代码</a>
+    </h1>
+  
+
+        
+        <a href="/2019/09/06/使用Web-Worker优化代码/" class="archive-article-date">
+  	<time datetime="2019-09-06T07:23:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前段时间有个需求，需要前端导出excel。一般来说，对于导出大量数据的功能，最好还是交给后端来做，然而后端老哥并不想做(<del>撕逼失败</del>)，只能自力更生。</p>
+<p>前端导出excel本身已经有很成熟的库了，比如<a href="https://github.com/SheetJS/js-xlsx" target="_blank" rel="noopener">js-xlsx</a>, <a href="https://github.com/cuikangjie/js-export-excel" target="_blank" rel="noopener">js-export-excel</a>，所以实现起来并不难。但是，当导出的数据达到几万条时，就会发现页面产生了明显的卡顿。原因也很简单: 一般我们都是基于后端返回的json数据来生成excel，但是后端返回的数据一般都不能直接用来生成数据，我们还需要进行一些格式化：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> list = <span class="keyword">await</span> request(<span class="string">'/api/getExcelData'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> format = list.map(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 对返回的json数据进行格式化</span></span><br><span class="line">  item.time = moment(item.time).format(<span class="string">'YYYY-MM-DD HH:mm'</span>);</span><br><span class="line">  <span class="comment">// ... 省略其他各种操作</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据json生成excel</span></span><br><span class="line"><span class="keyword">const</span> toExcel = <span class="keyword">new</span> ExportJsonExcel(format).saveExcel();</span><br></pre></td></tr></table></figure></p>
+<p>卡顿就发生在对大量数据进行<code>map</code>操作。由于JS是单线程的，所以在进行大量复杂运算时会独占主线程，导致页面的其他事件无法及时响应，造成页面假死的现象。</p>
+<p>那我们能不能把复杂的循环操作单独放在一个线程里呢？这时就要请出<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="noopener">web worker</a>了</p>
+        
+          <a class="article-more-a" href="/2019/09/06/使用Web-Worker优化代码/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/09/06/使用Web-Worker优化代码/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-终端配置代理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/27/终端配置代理/">终端配置代理</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/27/终端配置代理/" class="archive-article-date">
+  	<time datetime="2019-07-27T03:12:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近用<code>brew</code>安装软件一直卡在<code>Updating Homebrew...</code>，原因众所周知，当然处理方法有很多，为了解决根本原因，决定给终端配置下代理。</p>
+<p>首先需要明确的是，即使<code>shadowsocks</code>开启了全局模式，你的终端也不会自动代理到SS上！</p>
+        
+          <a class="article-more-a" href="/2019/07/27/终端配置代理/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">cmder</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">iterm2</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/27/终端配置代理/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-lerna管理package" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -396,187 +556,6 @@
 
 
   
-    <article id="post-傻傻分不清的Manifest" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/04/傻傻分不清的Manifest/">傻傻分不清的Manifest</a>
-    </h1>
-  
-
-        
-        <a href="/2019/06/04/傻傻分不清的Manifest/" class="archive-article-date">
-  	<time datetime="2019-06-04T07:36:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在前端，说到<code>manifest</code>，其实是有歧义的，就我了解的情况来说，<code>manifest</code>可以指代下列含义：</p>
-<ol>
-<li><code>html</code>标签的<code>manifest</code>属性: <a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Using_the_application_cache" target="_blank" rel="noopener">离线缓存</a>（目前已被废弃）</li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/Manifest" target="_blank" rel="noopener">PWA</a>: 将Web应用程序安装到设备的主屏幕</li>
-<li>webpack中<a href="https://www.npmjs.com/package/webpack-manifest-plugin" target="_blank" rel="noopener">webpack-manifest-plugin</a>插件打包出来的<code>manifest.json</code>文件，用来生成一份资源清单，为后端渲染服务 </li>
-<li>webpack中<a href="https://webpack.js.org/plugins/dll-plugin/#root" target="_blank" rel="noopener">DLL</a>打包时,输出的<code>manifest.json</code>文件，用来分析已经打包过的文件，优化打包速度和大小</li>
-<li>webpack中<a href="https://www.webpackjs.com/concepts/manifest/" target="_blank" rel="noopener">manifest</a>运行时代码</li>
-</ol>
-<p>下面我们来一一介绍下<br>
-        
-          <a class="article-more-a" href="/2019/06/04/傻傻分不清的Manifest/#more">more >></a>
-        
-      
-
-      
-    </p></div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">webpack</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwa</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/06/04/傻傻分不清的Manifest/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-从零开始写一个Telegram-Bot" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/30/从零开始写一个Telegram-Bot/">从零开始写一个Telegram Bot</a>
-    </h1>
-  
-
-        
-        <a href="/2019/03/30/从零开始写一个Telegram-Bot/" class="archive-article-date">
-  	<time datetime="2019-03-30T14:00:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><ruby><br>  Telegram<rp>(</rp><rt>电报</rt><rp>)</rp><br></ruby>提供了丰富的<a href="https://core.telegram.org/bots/api" target="_blank" rel="noopener">API</a>，让我们可以非常方便的开发一个bot机器人。同时，<a href="https://core.telegram.org/bots/samples" target="_blank" rel="noopener">社区</a>也已经对底层API进行了各种语言的封装，因此，本文采用<a href="https://github.com/yagop/node-telegram-bot-api" target="_blank" rel="noopener">node-telegram-bot-api</a>来快速实现bot</p>
-<p><strong>注意: 由于国内网络的原因，Telegram bot 开发时需要全程开启<del>梯子</del>，并选择全局代理模式！！！</strong></p>
-        
-          <a class="article-more-a" href="/2019/03/30/从零开始写一个Telegram-Bot/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Node</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Telegram</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Nginx</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/03/30/从零开始写一个Telegram-Bot/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
@@ -591,7 +570,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2021 深红
+    		&copy; 2022 深红
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -655,14 +634,6 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">前端</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Ant Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
@@ -671,7 +642,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">windows</a>
+                <a href="javascript:void(0)" class="js-tag color3">前端</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Ant Design</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -679,7 +654,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Node</a>
+                <a href="javascript:void(0)" class="js-tag color3">windows</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -691,6 +666,10 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">babel</a>
               </li>
              
@@ -699,15 +678,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Promise</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">RxJS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">cookie</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Promise</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -727,11 +706,23 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">jsbridge</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">node</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Koa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Express</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">jsbridge</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -747,23 +738,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Koa</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Express</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">react-native</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -775,11 +754,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+                <a href="javascript:void(0)" class="js-tag color3">支付</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -799,7 +778,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">webpack</a>
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -819,11 +798,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">pwa</a>
+                <a href="javascript:void(0)" class="js-tag color2">rollup</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">rollup</a>
+                <a href="javascript:void(0)" class="js-tag color4">pwa</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -839,19 +818,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Docker</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">koa2</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">mad</a>
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -859,7 +830,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">web</a>
+                <a href="javascript:void(0)" class="js-tag color4">mad</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">koa2</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -872,6 +847,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">iterm2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
               </li>
              
               <li class="article-tag-list-item">
