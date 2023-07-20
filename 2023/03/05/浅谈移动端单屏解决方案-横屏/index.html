@@ -17,8 +17,8 @@
 <meta property="og:description" content="前文《浅谈移动端单屏解决方案》中，我介绍了移动端单屏场景下的一些常规解决方案。但是，这些方案主要针对的是竖屏的页面，对于一种特殊情况：横屏单屏页面，我们则需要进一步适配。 强制横屏某些业务场景下，我们的页面需要用户横屏才能进行浏览和操作 (横屏的网页H5游戏、内嵌在横屏手游中的webview活动页…)">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://pic.deepred5.com/screenshot-20230305-230507.png">
-<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/939349a83d1e46a1bd2e3b3dd3703e8d~tplv-k3u1fbpfcp-watermark.image?">
-<meta property="og:updated_time" content="2023-04-28T03:01:18.627Z">
+<meta property="og:image" content="https://static.aisnogames.com/resources/cdn/3606538799f84f79.gif">
+<meta property="og:updated_time" content="2023-07-20T09:02:47.199Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈移动端单屏解决方案-横屏单屏">
 <meta name="twitter:description" content="前文《浅谈移动端单屏解决方案》中，我介绍了移动端单屏场景下的一些常规解决方案。但是，这些方案主要针对的是竖屏的页面，对于一种特殊情况：横屏单屏页面，我们则需要进一步适配。 强制横屏某些业务场景下，我们的页面需要用户横屏才能进行浏览和操作 (横屏的网页H5游戏、内嵌在横屏手游中的webview活动页…)">
@@ -194,7 +194,7 @@
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.safe-content</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">13.34rem</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">7.5rem</span>;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">margin</span>: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这时，只需要把<code>safe-content</code>的<code>witdh</code>和<code>height</code>写死，就能保证宽高比永远保持为<code>1334 * 750</code></p>
 <p>完整页面，点击此处<a href="http://deepred5.com/landscape/bingo.html" target="_blank" rel="noopener">动态修改rem-预览</a> (支持pc和移动端)</p>
-<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/939349a83d1e46a1bd2e3b3dd3703e8d~tplv-k3u1fbpfcp-watermark.image?" alt="动态rem gif图"></p>
+<p><img src="https://static.aisnogames.com/resources/cdn/3606538799f84f79.gif" alt="动态rem gif图"></p>
 <h2 id="横屏交互"><a href="#横屏交互" class="headerlink" title="横屏交互"></a>横屏交互</h2><p>在竖屏状态时，虽然我们的页面被强制旋转90度，实现了强制横屏，但此时页面的交互手势，仍是竖屏状态：最明显的就是轮播图<code>swiper</code>组件</p>
 <p>手机竖屏打开此页面<a href="http://deepred5.com/landscape/swiper.html" target="_blank" rel="noopener">swiper-预览</a>可以发现，当页面处于强制横屏(<strong>手机仍然是竖屏</strong>)时，我们需要<strong>左右</strong>滑动，才能<strong>上下</strong>切换轮播图</p>
 <p>解决方案是：我们关闭<code>swiper</code>默认的监听手势，由我们自己来实现监听滑动。当处于正常横屏时，我们监听左右滑动；当处于强制横屏(<strong>手机仍然是竖屏</strong>)时，我们监听上下滑动。</p>
@@ -565,10 +565,6 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">前端</a>
               </li>
              
@@ -577,15 +573,19 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">ACG</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
+                <a href="javascript:void(0)" class="js-tag color3">windows</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">windows</a>
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -633,14 +633,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">yilia</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">node</a>
               </li>
              
@@ -649,11 +641,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Koa</a>
+                <a href="javascript:void(0)" class="js-tag color1">yilia</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Express</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -669,7 +661,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -678,6 +670,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">react-native</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Koa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Express</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -690,22 +690,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">支付</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Media Source</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Media Source Extensions</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">MSE</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">视频</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -725,11 +709,27 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">NPM</a>
+                <a href="javascript:void(0)" class="js-tag color3">Media Source</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Media Source Extensions</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">MSE</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">视频</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">rollup</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">NPM</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -773,7 +773,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">lottie</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -782,10 +790,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">iterm2</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">web</a>
               </li>
              
               <li class="article-tag-list-item">
